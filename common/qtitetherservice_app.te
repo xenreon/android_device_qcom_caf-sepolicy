@@ -25,17 +25,21 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-type qsee_svc_app, domain;
-app_domain(qsee_svc_app)
-binder_use(qsee_svc_app)
+type qtitetherservice_app, domain;
+app_domain(qtitetherservice_app)
 
-# allow qsee_svc_app to interact with proxy daemon
-binder_call(qsee_svc_app, qseeproxy)
+allow qtitetherservice_app qtitetherservices_service:service_manager add;
+allow qtitetherservice_app { app_api_service system_api_service }:service_manager find;
 
-# file permission
-allow qsee_svc_app qsee_svc_app_data_file:dir create_dir_perms;
-allow qsee_svc_app qsee_svc_app_data_file:file create_file_perms;
+allow qtitetherservice_app self:socket create_socket_perms;
 
-# allow service manager find
-allow qsee_svc_app { app_api_service system_api_service
- fidodaemon_service qseeproxy_service }:service_manager find;
+allow qtitetherservice_app ipa_dev:chr_file rw_file_perms;
+
+unix_socket_connect(qtitetherservice_app, netd, netd);
+
+qmux_socket(qtitetherservice_app);
+
+allow qtitetherservice_app qtitetherservice_app_data_file:dir create_dir_perms;
+allow qtitetherservice_app qtitetherservice_app_data_file:{ file lnk_file } create_file_perms;
+
+allow qtitetherservice_app wcnss_service_exec:file rx_file_perms;

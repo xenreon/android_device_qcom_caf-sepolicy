@@ -25,17 +25,13 @@
 # OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-type qsee_svc_app, domain;
-app_domain(qsee_svc_app)
-binder_use(qsee_svc_app)
+type mdtpservice_app, domain;
+app_domain(mdtpservice_app)
+binder_use(mdtpservice_app)
 
-# allow qsee_svc_app to interact with proxy daemon
-binder_call(qsee_svc_app, qseeproxy)
+# allow mdtpservice_app to interact with proxy daemon
+binder_call(mdtpservice_app, mdtpdaemon_service)
 
-# file permission
-allow qsee_svc_app qsee_svc_app_data_file:dir create_dir_perms;
-allow qsee_svc_app qsee_svc_app_data_file:file create_file_perms;
-
-# allow service manager find
-allow qsee_svc_app { app_api_service system_api_service
- fidodaemon_service qseeproxy_service }:service_manager find;
+# file permissions
+allow mdtpservice_app mdtp_svc_app_data_file:dir create_dir_perms;
+allow mdtpservice_app mdtp_svc_app_data_file:file create_file_perms;
