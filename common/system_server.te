@@ -120,3 +120,6 @@ allow system_server iqfp_service:service_manager find;
 
 #for seemp
 unix_socket_send(system_server, seempdw, seempd)
+
+allow system_server self:unix_stream_socket 0x7704;
+
