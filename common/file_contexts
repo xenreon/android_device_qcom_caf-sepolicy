@@ -17,9 +17,13 @@
 /dev/nfc-nci                                    u:object_r:nfc_device:s0
 /dev/nq-nci                                     u:object_r:nfc_device:s0
 /dev/qseecom                                    u:object_r:tee_device:s0
+/dev/smcinvoke                                  u:object_r:smcinvoke_device:s0
 /dev/spcom                                      u:object_r:spcom_device:s0
+/dev/splog                                      u:object_r:splog_device:s0
 /dev/sp_kernel                                  u:object_r:skp_device:s0
 /dev/sp_ssr                                     u:object_r:sp_ssr_device:s0
+/dev/sec_nvm_sampleapp                          u:object_r:sec_nvm_sampleapp_device:s0
+/dev/sec_nvm_jcos                               u:object_r:sec_nvm_jcos_device:s0
 /dev/sp_keymaster                               u:object_r:sp_keymaster_device:s0
 /dev/cryptoapp                                  u:object_r:cryptoapp_device:s0
 /dev/qsee_ipc_irq_spss                          u:object_r:qsee_ipc_irq_spss_device:s0
@@ -76,6 +80,7 @@
 /dev/dri/card0                                  u:object_r:graphics_device:s0
 /dev/dri/controlD64                             u:object_r:graphics_device:s0
 /dev/dri/renderD128                             u:object_r:graphics_device:s0
+/dev/wlan                                       u:object_r:wlan_device:s0
 
 ###################################
 # Dev block nodes
@@ -88,8 +93,9 @@
 /dev/block/bootdevice/by-name/misc              u:object_r:misc_block_device:s0
 #/dev/block/mmcblk0p13                          u:object_r:bootselect_device:s0
 /dev/block/zram0                                u:object_r:swap_block_device:s0
-/dev/block/bootdevice/by-name/dip               u:object_r:dip_device:s0
 /dev/block/bootdevice/by-name/mdtp              u:object_r:mdtp_device:s0
+/dev/block/bootdevice/by-name/mdtp_a            u:object_r:mdtp_device:s0
+/dev/block/bootdevice/by-name/mdtp_b            u:object_r:mdtp_device:s0
 /dev/block/bootdevice/by-name/logdump           u:object_r:logdump_partition:s0
 
 ###################################
@@ -107,6 +113,7 @@
 /dev/socket/thermal-send-client                 u:object_r:thermal_socket:s0
 /dev/socket/thermal-recv-client                 u:object_r:thermal_socket:s0
 /dev/socket/thermal-recv-passive-client         u:object_r:thermal_socket:s0
+/dev/socket/thermal-send-rule                   u:object_r:thermal_socket:s0
 /dev/socket/ims_qmid                            u:object_r:ims_socket:s0
 /dev/socket/ims_datad                           u:object_r:ims_socket:s0
 /dev/socket/ims_rtpd                            u:object_r:ims_socket:s0
@@ -126,6 +133,7 @@
 /dev/socket/rild-debug3                         u:object_r:rild_debug_socket:s0
 /dev/socket/msm_irqbalance                      u:object_r:msm_irqbalance_socket:s0
 /dev/socket/seempdw                             u:object_r:seempdw_socket:s0
+/dev/socket/mlid                                u:object_r:mlid_socket:s0
 /dev/socket/wififtmd_server                     u:object_r:wififtmd_socket:s0
 /dev/socket/wpa_wigig[0-9]                      u:object_r:wpa_socket:s0
 
@@ -180,7 +188,9 @@
 /system/bin/tftp_server                         u:object_r:rfs_access_exec:s0
 /system/bin/hvdcp                               u:object_r:hvdcp_exec:s0
 /system/bin/qseecomd                            u:object_r:tee_exec:s0
+/system/bin/sec_nvm                             u:object_r:sec_nvm_exec:s0
 /system/bin/spdaemon                            u:object_r:spdaemon_exec:s0
+/system/bin/splogger                            u:object_r:splogger_exec:s0
 /system/bin/hostapd_cli                         u:object_r:hostapd_exec:s0
 /system/bin/adsprpcd                            u:object_r:adsprpcd_exec:s0
 /system/bin/wpa_cli                             u:object_r:wcnss_service_exec:s0
@@ -204,6 +214,7 @@
 /system/bin/ssr_setup                           u:object_r:ssr_setup_exec:s0
 /system/bin/subsystem_ramdump                   u:object_r:subsystem_ramdump_exec:s0
 /system/bin/ssr_diag                            u:object_r:ssr_diag_exec:s0
+/system/bin/mlid                                u:object_r:mlid_exec:s0
 /system/bin/loc_launcher                        u:object_r:location_exec:s0
 /system/bin/quipc_main                          u:object_r:location_exec:s0
 /system/bin/ipepb                               u:object_r:location_exec:s0
@@ -253,7 +264,8 @@
 /system/bin/fstman                              u:object_r:fstman_exec:s0
 /system/vendor/bin/mdtpd                        u:object_r:mdtpdaemon_exec:s0
 /system/bin/wifi_ftmd                           u:object_r:wifi_ftmd_exec:s0
-
+/system/vendor/bin/smcinvoked                   u:object_r:smcinvoke_daemon_exec:s0
+/system/bin/qdmastatsd                          u:object_r:qdmastatsd_exec:s0
 ###################################
 # sysfs files
 #
@@ -282,6 +294,7 @@
 /sys/devices/f9a55000.*/power_supply/usb(/.*)?                      u:object_r:sysfs_usb_supply:s0
 /sys/devices/virtual/graphics/fb([0-3])+/hpd                        u:object_r:sysfs_graphics:s0
 /sys/devices/virtual/graphics/fb([0-3])+/res_info                   u:object_r:sysfs_graphics:s0
+/sys/devices/virtual/graphics/fb([0-3])+/hdcp2p2/min_level_change   u:object_r:sysfs_graphics:s0
 /sys/devices/virtual/graphics/fb([0-3])+/s3d_mode                   u:object_r:sysfs_graphics:s0
 /sys/class/graphics/fb([0-2])+/mdp/caps                             u:object_r:sysfs_graphics:s0
 /sys/class/graphics/fb([0-2])+/ad                                   u:object_r:sysfs_graphics:s0
@@ -325,13 +338,13 @@
 /data/misc/location(/.*)?                                           u:object_r:location_data_file:s0
 /data/misc/location/mq/location-mq-s                                u:object_r:location_socket:s0
 /data/misc/location/mq/alarm_svc                                    u:object_r:location_socket:s0
-/data/FTM_AP(/.*)?                                                  u:object_r:mmi_data_file:s0
 /data/misc/hbtp(/.*)?                                               u:object_r:hbtp_log_file:s0
 /data/misc/qlogd(/.*)?                                              u:object_r:qlogd_data_file:s0
 /data/usf(/.*)?                                                     u:object_r:usf_data_file:s0
 /data/misc/dts(/.*)?                                                u:object_r:dts_data_file:s0
 /data/misc/seemp(/.*)?                                              u:object_r:seemp_file:s0
 /data/misc/SelfHost(/.*)?                                           u:object_r:RIDL_data_file:s0
+/data/misc/OTA(/.*)?                                                u:object_r:RIDL_data_file:s0
 /data/misc/qti-logkit(/.*)?                                         u:object_r:qti_logkit_priv_data_file:s0
 /data/misc/qti-logkit/shared-public(/.*)?                           u:object_r:qti_logkit_pub_data_file:s0
 /data/misc/qti-logkit/logdata(/.*)?                                 u:object_r:qti_logkit_pub_data_file:s0
@@ -347,6 +360,8 @@
 /data/misc/wifi/wigig_sockets(/.*)?                                 u:object_r:wpa_socket:s0
 /data/misc/wifi/wigig_sockets/wpa_ctrl.*                            u:object_r:system_wpa_socket:s0
 /data/app-regional(/.*)?                                            u:object_r:regionalization_data_file:s0
+/data/misc/qdma(/.*)?                                               u:object_r:qdma_data_file:s0
+/data/misc/qdmastats(/.*)?                                          u:object_r:qdma_data_file:s0
 ###################################
 # persist files
 #
@@ -366,6 +381,7 @@
 /persist/speccfg(/.*)?                                              u:object_r:regionalization_file:s0
 /persist/misc(/.*)?                                                 u:object_r:persist_misc_file:s0
 /persist/bms(/.*)?                                                  u:object_r:persist_bms_file:s0
+/persist/FTM_AP(/.*)?                                               u:object_r:mmi_data_file:s0
 
 ###################################
 # etc files
@@ -376,8 +392,3 @@
 # adsp files
 #
 /dsp(/.*)?                                                          u:object_r:adsprpcd_file:s0
-
-###################################
-# cache files
-#
-/cache/FTM_AP(/.*)?                                                  u:object_r:mmi_data_file:s0

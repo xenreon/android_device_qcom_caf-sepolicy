@@ -47,6 +47,7 @@ ctl.qti                    u:object_r:qti_prop:s0
 ctl.sensors                u:object_r:sensors_prop:s0
 ctl.msm_irqbalance         u:object_r:msm_irqbalance_prop:s0
 ctl.msm_irqbal_lb          u:object_r:msm_irqbalance_prop:s0
+ctl.diag_mdlog_start       u:object_r:diag_mdlog_prop:s0
 camera.                    u:object_r:camera_prop:s0
 persist.camera.            u:object_r:camera_prop:s0
 spcomlib.                    u:object_r:spcomlib_prop:s0
@@ -95,3 +96,7 @@ sys.boot_mode              u:object_r:boot_mode_prop:s0
 ro.gpu.available_frequencies u:object_r:freq_prop:s0
 # NFC
 sys.nfc.nq.                u:object_r:nfc_nq_prop:s0
+
+#crash detection property
+sys.crash.detect			u:object_r:detect_prop:s0
+persist.crash.cnt			u:object_r:detect_prop:s0

@@ -55,6 +55,8 @@ allow mmi fm_radio_device:chr_file r_file_perms;
 allow mmi fm_data_file:file r_file_perms;
 allow mmi fm_prop:property_service set;
 allow mmi ctl_default_prop:property_service set;
+unix_socket_connect(mmi, bluetooth, bluetooth)
+set_prop(mmi, bluetooth_prop)
 
 #bluetooth case
 allow mmi bluetooth_data_file:dir rw_dir_perms;
@@ -63,6 +65,7 @@ allow mmi bluetooth_prop:property_service set;
 allow mmi smd_device:chr_file rw_file_perms;
 allow mmi persist_bluetooth_file:file r_file_perms;
 allow mmi wcnss_filter:unix_stream_socket connectto;
+allow mmi bt_device:chr_file rw_file_perms;
 
 #GPS case
 allow mmi location_data_file:fifo_file create_file_perms;
@@ -84,6 +87,7 @@ allow mmi video_device:chr_file rw_file_perms;
 allow mmi camera_data_file:sock_file write;
 allow mmi camera_data_file:dir r_dir_perms;
 allow mmi mm-qcamerad:unix_dgram_socket sendto;
+set_prop(mmi, camera_prop)
 
 #nfc case
 allow mmi nfc_data_file:dir rw_dir_perms;
@@ -121,6 +125,10 @@ net_domain(mmi);
 
 #allow mmi access boot mode switch
 allow mmi boot_mode_prop:property_service set;
+
+#allow mmi monitor uevent
+allow mmi self:netlink_kobject_uevent_socket create_socket_perms;
+
 #diag
 userdebug_or_eng(`
     diag_use(mmi)

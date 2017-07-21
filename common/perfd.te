@@ -47,10 +47,13 @@ allow perfd {
     system_app
     wfdservice
     mediaserver
+    mediacodec
     thermal-engine
     surfaceflinger
     appdomain
     audioserver
+    cameraserver
+    wcnss_service
 }:process signull;
 
 #Allow perfd to set properties

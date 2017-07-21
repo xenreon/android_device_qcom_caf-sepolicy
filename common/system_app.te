@@ -52,7 +52,9 @@ unix_socket_connect(system_app, mpctl, perfd)
 unix_socket_connect(system_app, pps, mm-pp-daemon)
 
 userdebug_or_eng(`
-  #allow system_app debugfs:file r_file_perms;
+  typeattribute system_app qti_debugfs_domain;
+  allow system_app debugfs:dir r_dir_perms;
+  allow system_app debugfs:file rw_file_perms;
   allow system_app su:unix_dgram_socket sendto;
   allow system_app persist_file:dir r_dir_perms;
   allow system_app sensors_persist_file:dir r_dir_perms;
@@ -64,11 +66,19 @@ userdebug_or_eng(`
   allow system_app tombstone_data_file:dir r_dir_perms;
   allow system_app tombstone_data_file:file r_file_perms;
   diag_use(system_app)
+
+  # allow to read ssr ramdump
+  allow system_app ssr_ramdump_data_file:dir r_dir_perms;
+  allow system_app ssr_ramdump_data_file:file r_file_perms;
 ')
 
 allow system_app cnd_data_file:dir w_dir_perms;
 allow system_app cnd_data_file:file create_file_perms;
 allow system_app bluetooth:unix_stream_socket ioctl;
+
+# access to lowi-server
+allow system_app location_data_file:dir r_dir_perms;
+unix_socket_connect(system_app, location, location)
 
 # access to tee domain
 allow system_app tee:unix_dgram_socket sendto;
@@ -194,3 +204,20 @@ unix_socket_connect(system_app, ims, ims)
 
 # access to qseeproxy domain
 allow system_app qseeproxy:unix_dgram_socket sendto;
+
+# allow system_app to interact with smcinvoke daemon
+binder_call(system_app, smcinvoke_daemon)
+# allow MinkBinderSvc to be found
+allow system_app MinkBinderSvc:service_manager find;
+
+# allow access to cache recovery for LK3
+allow system_app cache_file:dir create_dir_perms;
+allow system_app cache_file:file create_file_perms;
+allow system_app cache_recovery_file:dir rw_dir_perms;
+allow system_app cache_recovery_file:file create_file_perms;
+
+# update engine
+binder_call( system_app, update_engine )
+
+# allow to read detect_prop
+allow system_app detect_prop:file r_file_perms;
