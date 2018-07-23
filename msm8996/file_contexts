@@ -28,6 +28,10 @@
 ###################################
 # Dev block nodes
 
+# Dev nodes
+/dev/spidev0.0                                                                  u:object_r:audio_device:s0
+/dev/i2c-6                                                                      u:object_r:audio_device:s0
+
 # common
 /dev/block/mmcblk0rpmb                                                          u:object_r:rpmb_device:s0
 /dev/block/mmcblk0                                                              u:object_r:root_block_device:s0
@@ -85,19 +89,23 @@
 ###################################
 # System files
 #
-/(vendor|system/vendor)/bin/seccamd u:object_r:seccamd_exec:s0
+/(vendor|system/vendor)/bin/amfsservice                                         u:object_r:amfsservice_exec:s0
+/(vendor|system/vendor)/bin/seccamd                                             u:object_r:seccamd_exec:s0
 /(vendor|system/vendor)/bin/hw/vendor.qti.hardware.automotive.vehicle@1.0-service          u:object_r:hal_automotive_vehicle_qti_exec:s0
 
 ###################################
 # sysfs files
 #
 /sys/devices/virtual/graphics/fb([0-2])+/lineptr_value                          u:object_r:sysfs_graphics:s0
+/sys/devices/soc/8c0000.qcom,msm-cam/video4linux/video0/name                    u:object_r:sysfs_graphics:s0
+/sys/devices/soc/c00000.qcom,vidc/video4linux/video32/name                      u:object_r:sysfs_graphics:s0
+/sys/devices/soc/c00000.qcom,vidc/video4linux/video33/name                      u:object_r:sysfs_graphics:s0
+/sys/devices/soc/soc:qcom,msm-ba/video4linux/video35/name                       u:object_r:sysfs_graphics:s0
 
 /sys/devices/soc/b00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/gpu_available_frequencies   u:object_r:sysfs_kgsl:s0
 
 #rawdump partition
 /dev/block/platform/soc/7464900.sdhci/by-name/rawdump                           u:object_r:rawdump_block_device:s0
-/sys/kernel/dload/emmc_dload                                                    u:object_r:sysfs_emmc_dload:s0
 
 ############################################################################################
 #Same hal process libs
@@ -128,6 +136,7 @@
 /dev/block/platform/soc/7464900.sdhci/by-name/rpm_[ab]              u:object_r:custom_ab_block_device:s0
 /dev/block/platform/soc/7464900.sdhci/by-name/system_[ab]           u:object_r:system_block_device:s0
 /dev/block/platform/soc/7464900.sdhci/by-name/tz_[ab]               u:object_r:custom_ab_block_device:s0
+/dev/block/platform/soc/7464900.sdhci/by-name/ImageFv_[ab]          u:object_r:custom_ab_block_device:s0
 /dev/block/platform/soc/7464900.sdhci/by-name/vendor_[ab]           u:object_r:system_block_device:s0
 /dev/block/platform/soc/7464900.sdhci/by-name/xbl_[ab]              u:object_r:xbl_block_device:s0
 
@@ -147,6 +156,7 @@
 /dev/block/platform/soc/624000.ufshc/by-name/rpm_[ab]          u:object_r:custom_ab_block_device:s0
 /dev/block/platform/soc/624000.ufshc/by-name/system_[ab]       u:object_r:system_block_device:s0
 /dev/block/platform/soc/624000.ufshc/by-name/tz_[ab]           u:object_r:custom_ab_block_device:s0
+/dev/block/platform/soc/624000.ufshc/by-name/ImageFv_[ab]      u:object_r:custom_ab_block_device:s0
 /dev/block/platform/soc/624000.ufshc/by-name/vendor_[ab]       u:object_r:system_block_device:s0
 /dev/block/platform/soc/624000.ufshc/by-name/xbl_[ab]          u:object_r:xbl_block_device:s0
 
@@ -155,3 +165,10 @@
 
 # Block devices for the drive that holds the xbl_a and xbl_b partitions.
 /dev/block/platform/soc/624000.ufshc/sd[bc]                 u:object_r:xbl_block_device:s0
+
+# device node for external anc
+/dev/msm_audio_anc                              u:object_r:msm_audio_anc_device:s0
+
+##################################
+# FBE
+/(vendor|system/vendor)/bin/init.qti.qseecomd.sh				u:object_r:init-qti-fbe-sh_exec:s0

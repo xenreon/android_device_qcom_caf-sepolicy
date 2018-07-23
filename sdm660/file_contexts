@@ -107,6 +107,7 @@
 /dev/block/platform/soc/c0c4000.sdhci/by-name/rpm_[ab]          u:object_r:custom_ab_block_device:s0
 /dev/block/platform/soc/c0c4000.sdhci/by-name/system_[ab]       u:object_r:system_block_device:s0
 /dev/block/platform/soc/c0c4000.sdhci/by-name/tz_[ab]           u:object_r:custom_ab_block_device:s0
+/dev/block/platform/soc/c0c4000.sdhci/by-name/ImageFv_[ab]      u:object_r:custom_ab_block_device:s0
 /dev/block/platform/soc/c0c4000.sdhci/by-name/vendor_[ab]       u:object_r:system_block_device:s0
 /dev/block/platform/soc/c0c4000.sdhci/by-name/xbl_[ab]          u:object_r:xbl_block_device:s0
 
@@ -129,6 +130,7 @@
 /dev/block/platform/soc/1da4000.ufshc/by-name/rpm_[ab]          u:object_r:custom_ab_block_device:s0
 /dev/block/platform/soc/1da4000.ufshc/by-name/system_[ab]       u:object_r:system_block_device:s0
 /dev/block/platform/soc/1da4000.ufshc/by-name/tz_[ab]           u:object_r:custom_ab_block_device:s0
+/dev/block/platform/soc/1da4000.ufshc/by-name/ImageFv_[ab]      u:object_r:custom_ab_block_device:s0
 /dev/block/platform/soc/1da4000.ufshc/by-name/vendor_[ab]       u:object_r:system_block_device:s0
 /dev/block/platform/soc/1da4000.ufshc/by-name/xbl_[ab]          u:object_r:xbl_block_device:s0
 
@@ -146,8 +148,6 @@
 
 ##################################
 # rawdump partition
-/sys/kernel/dload/emmc_dload                                                    u:object_r:sysfs_emmc_dload:s0
-/sys/kernel/dload/dload_mode                                                    u:object_r:sysfs_emmc_dload:s0
 
 #EMMC
 /dev/block/platform/soc/c0c4000.sdhci/by-name/rawdump                           u:object_r:rawdump_block_device:s0
@@ -156,3 +156,6 @@
 #UFS
 /dev/block/platform/soc/1da4000.ufshc/by-name/rawdump                           u:object_r:rawdump_block_device:s0
 /dev/block/platform/soc/1da4000.ufshc/by-name/ramdump                           u:object_r:rawdump_block_device:s0
+
+#USB
+/sys/module/usb_f_qcrndis/parameters/rndis_dl_max_xfer_size			u:object_r:sysfs_rndis_usb:s0
