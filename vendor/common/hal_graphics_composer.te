@@ -33,6 +33,7 @@
 # Allow read to '/sys/kernel/debug/*'
 userdebug_or_eng(`
     diag_use(hal_graphics_composer)
+    # Allow read to /sys/kernel/debug/*
     allow hal_graphics_composer qti_debugfs:dir r_dir_perms;
     allow hal_graphics_composer qti_debugfs:file r_file_perms;
 ')
@@ -103,3 +104,5 @@ hal_client_domain(hal_graphics_composer_default, hal_perf)
 # Access /dev/graphics/fb0.
 allow hal_graphics_composer graphics_device:chr_file rw_file_perms;
 allow hal_graphics_composer graphics_device:dir r_dir_perms;
+
+allow hal_graphics_composer_default sysfs_jpeg:file r_file_perms;
