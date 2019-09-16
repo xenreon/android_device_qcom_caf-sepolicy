@@ -1,59 +1,24 @@
-LOCAL_PATH:= $(call my-dir)
-BOARD_PLAT_PUBLIC_SEPOLICY_DIR := \
-    $(BOARD_PLAT_PUBLIC_SEPOLICY_DIR) \
-    $(LOCAL_PATH)/generic/public
+# all socs above sdm845 or sdm710
+BOARD_PLAT_PUBLIC_SEPOLICY_DIR += \
+    device/qcom/sepolicy/generic/public \
+    device/qcom/sepolicy/qva/public
 
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR := \
-    $(BOARD_PLAT_PRIVATE_SEPOLICY_DIR) \
-    $(LOCAL_PATH)/generic/private
+BOARD_PLAT_PRIVATE_SEPOLICY_DIR += \
+    device/qcom/sepolicy/generic/private \
+    device/qcom/sepolicy/qva/private
 
-BOARD_PLAT_PUBLIC_SEPOLICY_DIR := \
-    $(BOARD_PLAT_PUBLIC_SEPOLICY_DIR) \
-    $(LOCAL_PATH)/qva/public
 
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR := \
-    $(BOARD_PLAT_PRIVATE_SEPOLICY_DIR) \
-    $(LOCAL_PATH)/qva/private
-
-ifeq (,$(filter sdm845 sdm710, $(TARGET_BOARD_PLATFORM)))
-    BOARD_SEPOLICY_DIRS := \
-       $(BOARD_SEPOLICY_DIRS) \
-       $(LOCAL_PATH) \
-       $(LOCAL_PATH)/generic/vendor/common \
-       $(LOCAL_PATH)/qva/vendor/common/sysmonapp \
-       $(LOCAL_PATH)/qva/vendor/ssg \
-       $(LOCAL_PATH)/generic/vendor/timeservice \
-       $(LOCAL_PATH)/qva/vendor/common
-
-    ifeq ($(TARGET_SEPOLICY_DIR),)
-      BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/generic/vendor/$(TARGET_BOARD_PLATFORM)
-      BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/qva/vendor/$(TARGET_BOARD_PLATFORM)
-    else
-      BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/generic/vendor/$(TARGET_SEPOLICY_DIR)
-      BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/qva/vendor/$(TARGET_SEPOLICY_DIR)
-    endif
-
+BOARD_SEPOLICY_DIRS += \
+    device/qcom/sepolicy/generic/vendor/common \
+    device/qcom/sepolicy/qva/vendor/common/sysmonapp \
+    device/qcom/sepolicy/qva/vendor/ssg \
+    device/qcom/sepolicy/generic/vendor/timeservice \
+    device/qcom/sepolicy/qva/vendor/common \
+    device/qcom/sepolicy/generic/vendor/$(TARGET_BOARD_PLATFORM) \
+    device/qcom/sepolicy/qva/vendor/$(TARGET_BOARD_PLATFORM)
     ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
-    BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/generic/vendor/test
-    BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/qva/vendor/test
+         BOARD_SEPOLICY_DIRS += \
+              device/qcom/sepolicy/generic/vendor/test \
+              device/qcom/sepolicy/qva/vendor/test
     endif
-endif
 
-ifneq (,$(filter sdm845 sdm710, $(TARGET_BOARD_PLATFORM)))
-    BOARD_SEPOLICY_DIRS := \
-                 $(BOARD_SEPOLICY_DIRS) \
-                 $(LOCAL_PATH) \
-                 $(LOCAL_PATH)/legacy/vendor/common/sysmonapp \
-                 $(LOCAL_PATH)/legacy/vendor/ssg \
-                 $(LOCAL_PATH)/legacy/vendor/timeservice \
-                 $(LOCAL_PATH)/legacy/vendor/common
-
-    ifeq ($(TARGET_SEPOLICY_DIR),)
-      BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/legacy/vendor/$(TARGET_BOARD_PLATFORM)
-    else
-      BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/legacy/vendor/$(TARGET_SEPOLICY_DIR)
-    endif
-    ifneq (,$(filter userdebug eng, $(TARGET_BUILD_VARIANT)))
-    BOARD_SEPOLICY_DIRS += $(LOCAL_PATH)/legacy/vendor/test
-    endif
-endif
