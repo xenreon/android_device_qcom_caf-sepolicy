@@ -11,6 +11,7 @@ BOARD_PLAT_PRIVATE_SEPOLICY_DIR += \
 BOARD_SEPOLICY_DIRS += \
     device/qcom/sepolicy/legacy/vendor/common/sysmonapp \
     device/qcom/sepolicy/legacy/vendor/ssg \
+    device/qcom/sepolicy/legacy/timeservice \
     device/qcom/sepolicy/legacy/vendor/timeservice \
     device/qcom/sepolicy/legacy/vendor/common \
     device/qcom/sepolicy/legacy/vendor/$(TARGET_SEPOLICY_DIR)
